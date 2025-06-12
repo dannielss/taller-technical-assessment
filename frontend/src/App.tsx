@@ -16,7 +16,10 @@ function App() {
     e.preventDefault();
     const response = await fetch("http://localhost:8080/transaction", {
       method: "POST",
-      body: JSON.stringify(form),
+      body: JSON.stringify({
+        description: form.description,
+        amount: Number(form.amount),
+      }),
       headers: {
         "Content-Type": "application/json",
       },

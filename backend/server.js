@@ -1,22 +1,20 @@
-import express from "express";
-import cors from "cors";
-
-const app = express();
+const app = require("./app");
 const port = 8080;
-
-app.use(express.json());
-app.use(cors());
 
 let transactions = [];
 
 app.post("/transaction", (req, res) => {
   const body = req.body;
   if (body.description && body.amount) {
+    if (typeof body.amount !== "number") {
+      res.status(400).json("Amount should be a number");
+      return;
+    }
     transactions.push({
       description: body.description,
       amount: body.amount,
     });
-    res.status(200).json({
+    res.status(201).json({
       description: body.description,
       amount: body.amount,
     });
